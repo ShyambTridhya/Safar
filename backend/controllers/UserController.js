@@ -133,3 +133,61 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
   sendToken(user, 200, res)
 })
+
+//Get Login User Details
+
+exports.getLoginUserDetails = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id)
+  res.status(200).json({
+    success: true,
+    user,
+  })
+})
+
+//Change password for Logged in user
+
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('+password')
+
+  const ispasswordMatched = await user.comparePassword(req.body.oldPassword)
+
+  if (!ispasswordMatched) {
+    return next(new Error('Password does not match with old password', 401))
+  }
+
+  if (req.body.newPassword !== req.body.confirmpassword) {
+    return next(
+      new Error('New Password does not match with Confirm Password', 401)
+    )
+  }
+
+  user.password = req.body.newPassword
+  await user.save()
+
+  sendToken(user, 200, res)
+})
+
+//Update LoggedIn User Profile
+exports.updateLoggedInUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const newUpdateUserProfileData = {
+    name: req.body.name,
+    email: req.body.email,
+  }
+
+  // For Avtar edit add cloudinary later
+
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    newUpdateUserProfileData,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  )
+
+  res.status(200).json({
+    success: true,
+    user,
+  })
+})
