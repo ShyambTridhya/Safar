@@ -8,8 +8,15 @@ const {
   getLoginUserDetails,
   updatePassword,
   updateLoggedInUserProfile,
+  getAllUsersByAdmin,
+  getSingleUserByAdmin,
+  updateUserRoleByAdmin,
+  deleteUserByAdmin,
 } = require('../controllers/UserController')
-const {isAuthenticatedUser} = require('../middlewere/Authentication')
+const {
+  isAuthenticatedUser,
+  authorizationRoles,
+} = require('../middlewere/Authentication')
 const router = express.Router()
 
 //Authentication
@@ -29,5 +36,23 @@ router
 router
   .route('/UpdateLoggedInUserProfile')
   .patch(isAuthenticatedUser, updateLoggedInUserProfile)
+
+//Admin Routes
+router
+  .route('/GetAllUsersByAdmin')
+  .get(isAuthenticatedUser, authorizationRoles('admin'), getAllUsersByAdmin)
+router
+  .route('/GetSingleUserByAdmin/:id')
+  .get(isAuthenticatedUser, authorizationRoles('admin'), getSingleUserByAdmin)
+router
+  .route('/UpdateUserRoleByAdmin/:id')
+  .patch(
+    isAuthenticatedUser,
+    authorizationRoles('admin'),
+    updateUserRoleByAdmin
+  )
+router
+  .route('/DeleteUserByAdmin/:id')
+  .delete(isAuthenticatedUser, authorizationRoles('admin'), deleteUserByAdmin)
 
 module.exports = router

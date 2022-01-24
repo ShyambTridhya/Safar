@@ -191,3 +191,73 @@ exports.updateLoggedInUserProfile = catchAsyncErrors(async (req, res, next) => {
     user,
   })
 })
+
+//Get All Users From Database (Admin only)
+
+exports.getAllUsersByAdmin = catchAsyncErrors(async (req, res, next) => {
+  const users = await User.find()
+
+  res.status(200).json({
+    success: true,
+    users,
+  })
+})
+
+//Get Single Users From Database (Admin only)
+
+exports.getSingleUserByAdmin = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user) {
+    return next(
+      new ErrorHandler(`User not found with id: ${req.params.id}`, 404)
+    )
+  }
+
+  res.status(200).json({
+    success: true,
+    user,
+  })
+})
+
+//User Role Update (Admin only)
+exports.updateUserRoleByAdmin = catchAsyncErrors(async (req, res, next) => {
+  const newUpdateUserProfileData = {
+    name: req.body.name,
+    email: req.body.email,
+    role: req.body.role,
+  }
+  const user = await User.findByIdAndUpdate(
+    req.params.id,
+    newUpdateUserProfileData,
+    {
+      new: true,
+      runValidators: true,
+      useFindAndModify: false,
+    }
+  )
+  if (!user) {
+    return next(
+      new ErrorHandler(`User not found with id: ${req.params.id}`, 404)
+    )
+  }
+  res.status(200).json({
+    success: true,
+    user,
+  })
+})
+
+//User delete by Admin (Admin Only)
+exports.deleteUserByAdmin = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id)
+  if (!user) {
+    return next(
+      new ErrorHandler(`User not found with id: ${req.params.id}`, 404)
+    )
+  }
+  await user.remove()
+  res.status(200).json({
+    success: true,
+    message: 'User removed successfully',
+  })
+})
