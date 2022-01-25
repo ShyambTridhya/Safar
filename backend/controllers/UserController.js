@@ -2,7 +2,6 @@ const User = require('../models/UserModel')
 const ErrorHandler = require('../utils/ErrorHandler')
 const catchAsyncErrors = require('../middlewere/CatchAsyncError')
 const sendToken = require('../utils/JwtToken')
-const CatchAsyncError = require('../middlewere/CatchAsyncError')
 const sendEmail = require('../utils/sendEmail')
 const crypto = require('crypto')
 
@@ -65,7 +64,7 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 })
 
 //Forgot Password
-exports.forgotPassword = CatchAsyncError(async (req, res, next) => {
+exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findOne({email: req.body.email})
   if (!user) {
     return next(new ErrorHandler('User not found', 404))
