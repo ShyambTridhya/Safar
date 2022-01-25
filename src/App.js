@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
 
-function App() {
+// components
+
+import LoginSignUp from "./components/user/LoginSignUp";
+import ForgotPassword from "./components/user/ForgotPassword";
+import ResetPassword from "./components/user/ResetPassword";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+      <Route exact path="/login" component={LoginSignUp} />
+      <Route exact path="/password/forgot" component={ForgotPassword} />
+
+      <Route exact path="/password/reset/:token" component={ResetPassword} />
+    </Switch>
   );
-}
+};
 
 export default App;
