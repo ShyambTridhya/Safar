@@ -22,7 +22,7 @@ const router = express.Router()
 //Authentication
 router.route('/UserRegister').post(registerUser)
 router.route('/UserLogin').post(loginUser)
-router.route('/Password//UserForgotPassword').post(forgotPassword)
+router.route('/Password/UserForgotPassword').post(forgotPassword)
 router.route('/Password/UserResetPassword/:token').put(resetPassword)
 router.route('/UserLogout').get(logout)
 
