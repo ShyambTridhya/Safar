@@ -7,11 +7,11 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import FaceIcon from "@material-ui/icons/Face";
 import { useDispatch, useSelector } from "react-redux";
 import { clearErrors, login, register } from "../../actions/useractions";
-// import { useAlert } from "react-alert";
+import { useAlert } from "react-alert";
 
 const LoginSignUp = () => {
   const dispatch = useDispatch();
-  // const alert = useAlert();
+  const alert = useAlert();
 
   const history = useHistory();
   const location = useLocation(); 
