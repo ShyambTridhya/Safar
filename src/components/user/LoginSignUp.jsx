@@ -1,53 +1,49 @@
-import React, {  useRef, useState, useEffect } from "react";
-import "./LoginSignUp.css";
-import Loader from "../layout/loader/Loader.jsx";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import FaceIcon from "@material-ui/icons/Face";
-import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, login, register } from "../../actions/useractions";
-import { useAlert } from "react-alert";
+import React, {useRef, useState, useEffect} from 'react'
+import './LoginSignUp.css'
+import Loader from '../layout/loader/Loader.jsx'
+import {Link, useHistory, useLocation} from 'react-router-dom'
+import MailOutlineIcon from '@material-ui/icons/MailOutline'
+import LockOpenIcon from '@material-ui/icons/LockOpen'
+import FaceIcon from '@material-ui/icons/Face'
+import {useDispatch, useSelector} from 'react-redux'
+import {clearErrors, login, register} from '../../actions/useractions'
+// import { useAlert } from "react-alert";
 
 const LoginSignUp = () => {
-  const dispatch = useDispatch();
-  const alert = useAlert();
+  const dispatch = useDispatch()
+  // const alert = useAlert();
 
-  const history = useHistory();
-  const location = useLocation(); 
+  const history = useHistory()
+  const location = useLocation()
 
-  const loginTab = useRef();
-  const registerTab = useRef();
-  const switcherTab = useRef();
+  const loginTab = useRef()
+  const registerTab = useRef()
+  const switcherTab = useRef()
 
+  const {error, loading, isAuthenticated} = useSelector((state) => state.user)
 
-  const { error, loading, isAuthenticated } = useSelector(
-    (state) => state.user
-  );
-
-  
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPassword, setLoginPassword] = useState('')
 
   const [user, setUser] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+    name: '',
+    email: '',
+    password: '',
+  })
 
-  const { name, email, password } = user;
+  const {name, email, password} = user
 
-  const [avatar, setAvatar] = useState("/Profile.png");
-  const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
+  const [avatar, setAvatar] = useState('/Profile.png')
+  const [avatarPreview, setAvatarPreview] = useState('/Profile.png')
 
   const loginSubmit = (e) => {
-    e.preventDefault();
-    dispatch(login(loginEmail, loginPassword));
-  };
+    e.preventDefault()
+    dispatch(login(loginEmail, loginPassword))
+  }
 
   const registerSubmit = (e) => {
-    e.preventDefault();
-    dispatch(register(name, email, password,avatar));
+    e.preventDefault()
+    dispatch(register(name, email, password, avatar))
 
     // const myForm = new FormData();
 
@@ -55,54 +51,54 @@ const LoginSignUp = () => {
     // // myForm.set("email", email);
     // // myForm.set("password", password);
     // // myForm.set("avatar", avatar);
-  };
+  }
 
   const registerDataChange = (e) => {
-    if (e.target.name === "avatar") {
-      const reader = new FileReader();
+    if (e.target.name === 'avatar') {
+      const reader = new FileReader()
 
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
+          setAvatarPreview(reader.result)
+          setAvatar(reader.result)
         }
-      };
+      }
 
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0])
     } else {
-      setUser({ ...user, [e.target.name]: e.target.value });
+      setUser({...user, [e.target.name]: e.target.value})
     }
-  };
+  }
 
-  const redirect = location.search ? location.search.split("=")[1] : "/account";
+  const redirect = location.search ? location.search.split('=')[1] : '/account'
 
   useEffect(() => {
     if (error) {
       // alert.error(error);
-      dispatch(clearErrors());
+      dispatch(clearErrors())
     }
 
     if (isAuthenticated) {
-      history.push(redirect);
+      history.push(redirect)
     }
-  }, [dispatch, error,  history, isAuthenticated,redirect]);
+  }, [dispatch, error, history, isAuthenticated, redirect])
 
   const switchTabs = (e, tab) => {
-    if (tab === "login") {
-      switcherTab.current.classList.add("shiftToNeutral");
-      switcherTab.current.classList.remove("shiftToRight");
+    if (tab === 'login') {
+      switcherTab.current.classList.add('shiftToNeutral')
+      switcherTab.current.classList.remove('shiftToRight')
 
-      registerTab.current.classList.remove("shiftToNeutralForm");
-      loginTab.current.classList.remove("shiftToLeft");
+      registerTab.current.classList.remove('shiftToNeutralForm')
+      loginTab.current.classList.remove('shiftToLeft')
     }
-    if (tab === "register") {
-      switcherTab.current.classList.add("shiftToRight");
-      switcherTab.current.classList.remove("shiftToNeutral");
+    if (tab === 'register') {
+      switcherTab.current.classList.add('shiftToRight')
+      switcherTab.current.classList.remove('shiftToNeutral')
 
-      registerTab.current.classList.add("shiftToNeutralForm");
-      loginTab.current.classList.add("shiftToLeft");
+      registerTab.current.classList.add('shiftToNeutralForm')
+      loginTab.current.classList.add('shiftToLeft')
     }
-  };
+  }
 
   return (
     <>
@@ -114,8 +110,8 @@ const LoginSignUp = () => {
             <div className="LoginSignUpBox">
               <div>
                 <div className="login_signUp_toggle">
-                  <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
-                  <p onClick={(e) => switchTabs(e, "register")}>REGISTER</p>
+                  <p onClick={(e) => switchTabs(e, 'login')}>LOGIN</p>
+                  <p onClick={(e) => switchTabs(e, 'register')}>REGISTER</p>
                 </div>
                 <button ref={switcherTab}></button>
               </div>
@@ -199,7 +195,7 @@ const LoginSignUp = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default LoginSignUp;
+export default LoginSignUp

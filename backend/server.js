@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const app = require('./app')
 const dotenv = require('dotenv')
 const connectDatabase = require('./config/database')
@@ -11,7 +12,7 @@ process.on('uncaughtException', (err) => {
 })
 
 //config
-dotenv.config({path: 'backend/config/config.env'})
+dotenv.config({path: './config/config.env'})
 
 //ConnectDatabse
 connectDatabase()

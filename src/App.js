@@ -10,7 +10,7 @@ import ResetPassword from "./components/user/ResetPassword";
 const App = () => {
   return (
     <Switch>
-      <Route exact path="/login" component={LoginSignUp} />
+      <Route exact path="/" component={LoginSignUp} />
       <Route exact path="/password/forgot" component={ForgotPassword} />
 
       <Route exact path="/password/reset/:token" component={ResetPassword} />
