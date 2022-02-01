@@ -27,7 +27,7 @@ router
   )
 router
   .route('/UpdateProduct/:id')
-  .patch(isAuthenticatedUser, authorizationRoles('admin'), updateProduct)
+  .put(isAuthenticatedUser, authorizationRoles('admin'), updateProduct)
 router
   .route('/DeleteProduct/:id')
   .delete(isAuthenticatedUser, authorizationRoles('admin'), deleteProduct)
