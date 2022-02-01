@@ -97,6 +97,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
     await user.save({validateBeforeSave: false})
 
+    // eslint-disable-next-line no-undef
     return next(new ErrorHandler(error.message, 500))
   }
 })
@@ -121,6 +122,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
       )
     )
   }
+  console.log(req.body)
   if (req.body.password !== req.body.confirmpassword) {
     return next(new ErrorHandler('Password does not match', 400))
   }

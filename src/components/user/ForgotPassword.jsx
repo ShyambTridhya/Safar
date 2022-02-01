@@ -18,21 +18,21 @@ const ForgotPassword = () => {
   const forgotPasswordSubmit = (e) => {
     e.preventDefault()
 
-    const myForm = new FormData()
+    // const myForm = new FormData()
 
-    myForm.set('email', email)
-    dispatch(forgotPassword(myForm))
+    // myForm.set('email', email)
+    dispatch(forgotPassword(email))
   }
 
   useEffect(() => {
     if (error) {
-      alert.error(error)
+      // alert.error(error)
       dispatch(clearErrors())
     }
 
-    if (message) {
-      alert.success(message)
-    }
+    // if (message) {
+    //   alert.success(message)
+    // }
   }, [dispatch, error, message])
 
   return (
