@@ -33,6 +33,15 @@ export const login = (email, password) => async (dispatch) => {
       config
     )
 
+    await axios
+      .get(`http://localhost:4000/api/v1/GetLoginUserDetails`)
+      .then((response) => {
+        console.log('37', response)
+      })
+      .catch((err) => {
+        console.log('41', err)
+      })
+
     dispatch({type: LOGIN_SUCCESS, payload: data.user})
   } catch (error) {
     dispatch({type: LOGIN_FAIL, payload: error.response.data.message})

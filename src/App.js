@@ -6,6 +6,7 @@ import {Route, Switch} from 'react-router-dom'
 import LoginSignUp from './components/user/LoginSignUp'
 import ForgotPassword from './components/user/ForgotPassword'
 import ResetPassword from './components/user/ResetPassword'
+import Profile from './components/user/Profile'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         path="/Password/UserResetPassword/:token"
         component={ResetPassword}
       />
+      <Route exact path="/profile" component={Profile} />
     </Switch>
   )
 }
